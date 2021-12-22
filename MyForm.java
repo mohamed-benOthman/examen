@@ -6,7 +6,7 @@ public class MyForm extends JFrame {
     //les libelles
     JLabel formulaire = new JLabel("Exam Tp");
     JLabel nomL=new JLabel("Nom");
-    JLabel genreL=new JLabel("genre");
+    JLabel genreL=new JLabel("Genre");
     // les Inputs
     JTextField nomI = new JTextField();
     // les Buttons
@@ -45,7 +45,7 @@ public class MyForm extends JFrame {
         c.setLayout(new BorderLayout());
         c.add("North",formulaire);
         c.add("Center",panelAssemblage);
-        setSize(200,400);
+        setSize(600,400);
         setLocationRelativeTo(getParent());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         show();
