@@ -1,14 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.ImageObserver;
 
 public class MyForm extends JFrame {
     //les libelles
+    JPanel fieldset = new JPanel();
     JLabel formulaire = new JLabel("Exam Tp");
     JLabel nomL=new JLabel("Nom");
     JLabel genreL=new JLabel("Genre");
     // les Inputs
-    JTextField nomI = new JTextField();
+    JTextField nomI = new JTextField(25);
     // les Buttons
     JButton valider=new JButton("Ajouter");
     JButton annuler=new JButton("Annuler");
@@ -25,29 +27,38 @@ public class MyForm extends JFrame {
         bg.add(femmeI);
         // Panel Formulaire
         JPanel panelFormulaire=new JPanel();
-        panelFormulaire.setLayout(new GridLayout(5,1));
+        panelFormulaire.setLayout(new GridLayout(2,2));
         panelFormulaire.add(nomL);
         panelFormulaire.add(nomI);
         panelFormulaire.add(genreL);
-        panelFormulaire.add(hommeI);
-        panelFormulaire.add(femmeI);
+        JPanel panelRadioBouttons=new JPanel();
+        panelRadioBouttons.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelRadioBouttons.add(hommeI);
+        panelRadioBouttons.add(femmeI);
+        panelFormulaire.add(panelRadioBouttons);
+
+
         // Panel Buttons
+
         JPanel panelBouttons=new JPanel();
         panelBouttons.setLayout(new FlowLayout(FlowLayout.RIGHT));
         panelBouttons.add(valider);
         panelBouttons.add(annuler);
+        fieldset.add(panelFormulaire);
+        fieldset.setBorder(BorderFactory.createTitledBorder("informations"));
         // Panel Assemblages
         JPanel panelAssemblage=new JPanel();
         panelAssemblage.setLayout(new BorderLayout());
-        panelAssemblage.add("Center",panelFormulaire);
+        panelAssemblage.add("Center",fieldset);
         panelAssemblage.add("South",panelBouttons);
         Container c = getContentPane();
         c.setLayout(new BorderLayout());
         c.add("North",formulaire);
         c.add("Center",panelAssemblage);
-        setSize(600,400);
+        setSize(600,200);
         setLocationRelativeTo(getParent());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         show();
     }
     public static void main (String[] args)
