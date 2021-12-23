@@ -12,8 +12,8 @@ public class MyForm extends JFrame {
     // les Inputs
     JTextField nomI = new JTextField(25);
     // les Buttons
-    JButton valider=new JButton("Ajouter");
-    JButton annuler=new JButton("Annuler");
+    JButton liste=new JButton("Liste");
+    JButton ajouter=new JButton("Ajouter");
     JRadioButton hommeI = new JRadioButton("Homme");
     JRadioButton femmeI = new JRadioButton("Femme");
     ButtonGroup bg = new ButtonGroup();
@@ -23,6 +23,8 @@ public class MyForm extends JFrame {
         formulaire.setForeground(Color.black);
         formulaire.setFont(new Font("Time New Roman", Font.BOLD, 15));
         hommeI.setSelected(true);
+        hommeI.setActionCommand("Homme");
+        femmeI.setActionCommand("Femme");
         bg.add(hommeI);
         bg.add(femmeI);
         // Panel Formulaire
@@ -42,8 +44,8 @@ public class MyForm extends JFrame {
 
         JPanel panelBouttons=new JPanel();
         panelBouttons.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        panelBouttons.add(valider);
-        panelBouttons.add(annuler);
+        panelBouttons.add(liste);
+        panelBouttons.add(ajouter);
         fieldset.add(panelFormulaire);
         fieldset.setBorder(BorderFactory.createTitledBorder("informations"));
         // Panel Assemblages
@@ -58,7 +60,14 @@ public class MyForm extends JFrame {
         setSize(600,200);
         setLocationRelativeTo(getParent());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+        ajouter.addActionListener(new MyEvents(this));
+        liste.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MyList myList = new MyList();
+                myList.initScreen();
+            }
+        });
         show();
     }
     public static void main (String[] args)

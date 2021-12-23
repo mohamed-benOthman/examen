@@ -4,20 +4,27 @@ import java.awt.event.ActionListener;
 
 public class MyEvents implements ActionListener {
     MyForm form ;
-    MyDataBase myDataBase = new MyDataBase(
-            "com.mysql.jdbc.Driver",
-            "jdbc:mysql://localhost/mydb",
-            "root",
-            ""
-    );
+    MyDataBase myDataBase ;
+
+    public MyEvents(MyForm form) {
+        this.form = form;
+        myDataBase = new MyDataBase();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==form.valider)
+        if(e.getSource()==form.ajouter)
         {
-            if(myDataBase.Ajouter(form.nomI.getText(), form.hommeI.getText())>0)
-                JOptionPane.showMessageDialog(null, "Insertion effectu�e");
-            else
-                JOptionPane.showMessageDialog(null, "Echec d'insertion");
+           if(form.nomI.getText().length()>0){
+               Personne p = new Personne(form.nomI.getText(), form.bg.getSelection().getActionCommand());
+               if(myDataBase.Ajouter(p)>0)
+                   JOptionPane.showMessageDialog(null, "Insertion effectuee");
+               else
+                   JOptionPane.showMessageDialog(null, "Echec d'insertion");
+           } else {
+               JOptionPane.showMessageDialog(null, "Merci de saisir votre nom");
+           }
+
         }
         //Boutton Supprimer
 //        if(e.getSource()==supprimer)

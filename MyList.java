@@ -3,26 +3,37 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class MyList extends JFrame {
-    String entete[] = {"id","Nom","Genre"};
-    DefaultTableModel model = new DefaultTableModel(entete,3);
-    JTable table = new JTable(model);
-    JScrollPane sp = new JScrollPane();
+    String entete[] = {"ID","Nom","Genre"};
+    DefaultTableModel model;
+    JTable table ;
+    JScrollPane sp ;
+    MyDataBase myDataBase;
+    MyThread myThread ;
     public MyList() {
-        super("MyList");
+         myDataBase = new MyDataBase();
+        model = new DefaultTableModel(entete,0);
+        table= new JTable(model);
+        sp = new JScrollPane();
+        myThread = new MyThread(this);
+        myThread.run();
+    }
+
+    public void initScreen(){
         sp.getViewport().add(table);
-        sp.setPreferredSize(new Dimension(600,200));
+        sp.setPreferredSize(new Dimension(800,200));
         JPanel panelTable = new JPanel();
         panelTable.add(sp);
         Container c=getContentPane();
         c.setLayout(new BorderLayout());
         c.add("Center",panelTable);
-        setSize(600,400);
+        setSize(900,400);
         setLocationRelativeTo(getParent());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        show();
+        //remplirTab();
 
+        show();
     }
-    public static void main (String[] args) {
-        new MyList();
+    public void remplirTab(){
+        myDataBase.remplirTab(model);
     }
 }

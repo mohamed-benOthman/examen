@@ -1,18 +1,20 @@
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
 public class MyDataBase {
-    public String pilote;
-    public String url;
-    public String nom_utilisateur;
-    public String password;
+
+    private final String pilote = "com.mysql.jdbc.Driver";
+    private final String url ="jdbc:mysql://localhost/examensdb";
+    private final String nom_utilisateur ="root";
+    private final String password = "";
     private Connection maConnection;
     private Statement stm ;
     private ResultSet res;
-    MyDataBase(String pilote,String url,String nom_utilisateur,String password){
-        this.pilote = pilote;
-        this.url = url;
-        this.nom_utilisateur = nom_utilisateur;
-        this.password = password;
+    MyDataBase(){
+        initDB();
+    }
+
+    private void initDB() {
         try
         {
             Class.forName (pilote);
@@ -43,11 +45,15 @@ public class MyDataBase {
             System.err.println("Error creating SQL statement: " + e);
         }
     }
-    public int Ajouter(String nom, String genre)
+
+
+
+    public int Ajouter(Personne personne)
     {
         try
         {
-            int resUpd=stm.executeUpdate("INSERT INTO utilisateurs (nom, genre) VALUES ('"+nom+"','"+genre+"')");
+
+            int resUpd=stm.executeUpdate("INSERT INTO utilisateurs (nom, genre) VALUES ('"+personne.getNom()+"','"+personne.getGenre()+"')");
             return resUpd;
         }
         catch(SQLException e)
@@ -81,6 +87,23 @@ public class MyDataBase {
             System.err.println("Error executing query: " + e);
         }
         return 0;
+    }
+    public void remplirTab(DefaultTableModel model) {
+        try {
+            model.setRowCount(0);
+            this.res = this.stm.executeQuery("select * from utilisateurs");
+            Object[] ligne = new Object[model.getColumnCount()];
+
+            while(this.res.next()) {
+                for(int i = 0; i < ligne.length; ++i) {
+                    ligne[i] = this.res.getString(i+1);
+                }
+                model.addRow(ligne);
+            }
+        } catch (SQLException var5) {
+            System.err.println("Error executing query: " + var5);
+        }
+
     }
 
 
