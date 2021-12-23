@@ -105,6 +105,21 @@ public class MyDataBase {
         }
 
     }
+    public String getPersonneByGenre(String genre)  {
+        String result ="";
+        try {
+            this.res = this.stm.executeQuery("select count(*) from utilisateurs where genre ='"+genre+"'");
+            while (this.res.next()) {
+                result = this.res.getString(1);
+            }
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
 
 
 
