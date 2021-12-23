@@ -5,12 +5,13 @@ public class MyThread extends Thread{
     }
 
     public void run() {
-        System.out.println("ddd");
-        try {
-            this.myList.remplirTab();
-            sleep(1000);
-        } catch (Exception var3) {
-            System.out.println(var3);
+        while (true){
+            try {
+                this.myList.remplirTab();
+                sleep(1000);
+            } catch (Exception var3) {
+                System.out.println(var3);
+            }
         }
     }
 }
