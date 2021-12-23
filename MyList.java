@@ -8,14 +8,14 @@ public class MyList extends JFrame {
     JTable table ;
     JScrollPane sp ;
     MyDataBase myDataBase;
-    MyThread myThread ;
+    MyThread myThread;
     public MyList() {
          myDataBase = new MyDataBase();
         model = new DefaultTableModel(entete,0);
         table= new JTable(model);
         sp = new JScrollPane();
         myThread = new MyThread(this);
-        myThread.run();
+
     }
 
     public void initScreen(){
@@ -30,7 +30,7 @@ public class MyList extends JFrame {
         setLocationRelativeTo(getParent());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         //remplirTab();
-
+        myThread.start();
         show();
     }
     public void remplirTab(){
