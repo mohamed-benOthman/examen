@@ -4,6 +4,13 @@ public class MyThread extends Thread{
         this.myList = myList;
     }
 
+    public void histogramme (int nbPersonnes){
+
+    }
+
+    public void axesXY(int nbrPersonnes, String labelX, String labelY) {
+
+    }
     public void run() {
 
         while (true){
@@ -12,8 +19,8 @@ public class MyThread extends Thread{
                 sleep(1000);
 
 
-            } catch (Exception var3) {
-                System.out.println(var3);
+            } catch (Exception exception) {
+                System.out.println(exception);
             }
         }
     }

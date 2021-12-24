@@ -53,10 +53,8 @@ public class MyList extends JFrame{
 
         Point sw1 = new Point(chartX, chartY );
         Point ne1 = new Point(chartX, topY);
-        graphe.draw(new Line2D.Double(sw1, ne1));
-        drawArrowHead(graphe, ne1, sw1, Color.green);
         graphe.setColor(Color.red);
-        graphe.drawString("Genre", chartwidth, chartY + 18) ;
+        graphe.drawString("Genre", chartwidth, chartY + 25) ;
 
         Font original = graphe.getFont();
 
@@ -65,25 +63,28 @@ public class MyList extends JFrame{
         affineTransform.rotate(Math.toRadians(-90), 0, 0);
         Font rotatedFont = font.deriveFont(affineTransform);
         graphe.setFont(rotatedFont);
-        graphe.drawString("Nbr",18, chartY - chartheight/2);
+        int maleNumber = Integer.parseInt(myDataBase.getPersonneByGenre("Homme"));
+        int femaleNumber =  Integer.parseInt(myDataBase.getPersonneByGenre("Femme"));
+        int total = maleNumber + femaleNumber;
+        String str = "Homme: "+calculatePercentage(maleNumber, total)+ "%  Femme: " +calculatePercentage(femaleNumber, total) + "%";
         graphe.setFont(original);
         graphe.setColor(Color.red);
+        graphe.drawString(str, chartwidth/2 , chartY -60) ;
 
     }
 
-    public void drawRectangle(String hommeNumber, Color color, int margin) {
-        int height = Integer.parseInt(hommeNumber);
+    public void drawRectangle(String personNumber, Color color, int margin) {
+        int height = Integer.parseInt(personNumber);
         int barWidth = 50;
         int xLeft = 50 + margin;
         int yTopLeft = chartY - height;
         Rectangle rec = new Rectangle(xLeft, yTopLeft, barWidth, height);
         graphe.setColor(color);
         graphe.fill(rec);
-
         graphe.setColor(Color.green);
     }
 
-    public void initScreen(){
+    public void init(){
         frame =new JFrame("My List");
         frame.setSize(800,400);
         frame.setLocationByPlatform(true);
@@ -108,19 +109,23 @@ public class MyList extends JFrame{
         myThread.start();
 
     }
+
+    private float calculatePercentage(int number, int total){
+        return number * 100 / total;
+    }
     public void remplirTab(){
         int width = chart.getWidth();
         int height = chart.getHeight();
-        myDataBase.remplirTab(model);
-        chartheight = Integer.parseInt(myDataBase.getPersonnes());
-        chartwidth = width - 150;
+        String maleNumber = myDataBase.getPersonneByGenre("Homme");
+        String femaleNumber = myDataBase.getPersonneByGenre("Femme");
+        chartwidth = width - 180;
         chartX = 25;
         chartY = height - 30;
+        myDataBase.remplirTab(model);
+        chartheight = Integer.parseInt(myDataBase.getPersonnes());
         graphe=(Graphics2D)chart.getGraphics();
-        String hommeNumber = myDataBase.getPersonneByGenre("Homme");
-        String FemmeNumber = myDataBase.getPersonneByGenre("Femme");
-        drawRectangle(hommeNumber,Color.blue,0);
-        drawRectangle(FemmeNumber,Color.pink,60);
+        drawRectangle(maleNumber,Color.blue,0);
+        drawRectangle(femaleNumber,Color.white,80);
         drawChart();
 
     }

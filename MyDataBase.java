@@ -4,7 +4,7 @@ import java.sql.*;
 public class MyDataBase {
 
     private final String pilote = "com.mysql.jdbc.Driver";
-    private final String url ="jdbc:mysql://localhost/examensdb";
+    private final String url ="jdbc:mysql://localhost/examen";
     private final String nom_utilisateur ="root";
     private final String password = "";
     private Connection maConnection;
@@ -24,7 +24,6 @@ public class MyDataBase {
             System.err.println("Driver loading error: " + e);
         }
 
-        //2)Etape 2:	Etablir une connexion ==>
         try
         {
             maConnection = DriverManager.getConnection(this.url,this.nom_utilisateur,this.password);
@@ -35,7 +34,6 @@ public class MyDataBase {
         }
 
 
-        //3)Etape 3:	Cr�er un objet Statement ==>
         try
         {
             stm = maConnection.createStatement();
@@ -62,32 +60,8 @@ public class MyDataBase {
         }
         return 0;
     }
-    public int Supprimer(int id)
-    {
-        try
-        {
-            int resUpd=stm.executeUpdate("DELETE FROM utilisateurs WHERE id="+id);
-            return resUpd;
-        }
-        catch(SQLException e)
-        {
-            System.err.println("Error executing query: " + e);
-        }
-        return 0;
-    }
-    public int Modifier(int id, String nom, String genre)
-    {
-        try
-        {
-            int resUpd=stm.executeUpdate("UPDATE utilisateurs set nom='"+nom+"', genre='"+genre+"' WHERE id="+id);
-            return resUpd;
-        }
-        catch(SQLException e)
-        {
-            System.err.println("Error executing query: " + e);
-        }
-        return 0;
-    }
+
+
     public void remplirTab(DefaultTableModel model) {
         try {
             model.setRowCount(0);
@@ -100,24 +74,9 @@ public class MyDataBase {
                 }
                 model.addRow(ligne);
             }
-        } catch (SQLException var5) {
-            System.err.println("Error executing query: " + var5);
+        } catch (SQLException e) {
+            System.err.println("Error executing query: " + e);
         }
-
-    }
-    public String getPersonneByGenre(String genre)  {
-        String result ="";
-        try {
-            this.res = this.stm.executeQuery("select count(*) from utilisateurs where genre ='"+genre+"'");
-            while (this.res.next()) {
-                result = this.res.getString(1);
-            }
-        }
-
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
 
     }
 
@@ -137,5 +96,22 @@ public class MyDataBase {
         return result;
 
     }
+
+    public String getPersonneByGenre(String genre)  {
+        String result ="";
+        try {
+            this.res = this.stm.executeQuery("select count(*) from utilisateurs where genre ='"+genre+"'");
+            while (this.res.next()) {
+                result = this.res.getString(1);
+            }
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
 
 }
