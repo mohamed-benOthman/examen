@@ -122,5 +122,20 @@ public class MyDataBase {
     }
 
 
+    public String getPersonnes()  {
+        String result ="";
+        try {
+            this.res = this.stm.executeQuery("select count(*) from utilisateurs");
+            while (this.res.next()) {
+                result = this.res.getString(1);
+            }
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
 
 }
