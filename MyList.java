@@ -63,10 +63,16 @@ public class MyList extends JFrame{
         affineTransform.rotate(Math.toRadians(-90), 0, 0);
         Font rotatedFont = font.deriveFont(affineTransform);
         graphe.setFont(rotatedFont);
+        double malePercentage = 0;
+        double femalePercentage = 0;
+        int total=0;
         int maleNumber = Integer.parseInt(myDataBase.getPersonneByGenre("Homme"));
         int femaleNumber =  Integer.parseInt(myDataBase.getPersonneByGenre("Femme"));
-        int total = maleNumber + femaleNumber;
-        String str = "Homme: "+calculatePercentage(maleNumber, total)+ "%  Femme: " +calculatePercentage(femaleNumber, total) + "%";
+        total = maleNumber + femaleNumber;
+        malePercentage = calculatePercentage(maleNumber, total);
+        femalePercentage = calculatePercentage(femaleNumber, total);
+
+        String str = "Homme: "+malePercentage+ "%  Femme: " +calculatePercentage(femaleNumber, total) + "%";
         graphe.setFont(original);
         graphe.setColor(Color.red);
         graphe.drawString(str, chartwidth/2 , chartY -60) ;
